@@ -9,8 +9,8 @@ import ConcludedRoadmapList from "../../components/ConcludedRoadmapList/Conclcud
 
 const DashBoardPage = () => {
   return (
-    <SafeAreaView style={styles.techmapsRoadmaps}>
-      <PageHeader />
+    <SafeAreaView style={styles.body}>
+      <PageHeader pageName={"DASHBOARD"} />
       <View>
         <Dashboard />
         <Text style={{ color: "#FFF", marginTop: 10, fontFamily: "InterSemiBold" }}>Roadmaps Concluídos:</Text>

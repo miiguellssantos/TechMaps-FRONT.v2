@@ -1,9 +1,9 @@
 import React from "react";
-import { AuthProvider } from "./context/AuthContext";
+import  AuthProvider  from "./context/AuthContext";
 import AppNav from "./navigation/AppNav";
 import { useFonts } from "expo-font";
 
-export default function App() {
+const App = () => {
   const [loaded, error] = useFonts({
     Righteous: require("./assets/fonts/Righteous-Regular.ttf"),
     InterBlack: require("./assets/fonts/Inter-Regular.ttf"),
@@ -28,3 +28,5 @@ export default function App() {
     </AuthProvider>
   );
 }
+
+export default App;

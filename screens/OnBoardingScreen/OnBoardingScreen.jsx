@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "./style";
 
-const OnBoardingScreen = () => {
+const OnBoardingScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <Image

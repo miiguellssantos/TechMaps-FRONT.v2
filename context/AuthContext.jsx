@@ -1,11 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { createContext, useState, useEffect } from "react";
-import API_URL from "../configs";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const API_URL = "http://192.168.0.106:8080";
+
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState("");
   const [userInfo, setUserInfo] = useState("");
@@ -34,8 +35,8 @@ const AuthProvider = ({ children }) => {
 
   const postDashboard = async () => {
     try {
-      setUserInfo(await JSON.parse(AsyncStorage.getItem("userInfo")));
-      setUserId(userInfo.id);
+      const userInfo = JSON.parse(await AsyncStorage.getItem("userInfo"));
+      const userId = userInfo.id
       const authorizationHeader = await AsyncStorage.getItem("userToken");
 
       const response = await axios.post(
@@ -51,9 +52,10 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         const body = response.data;
         setDashboardInfo(body);
-        AsyncStorage.setItem("dashboardInfo", JSON.stringify(body));
-        setDashboardId(body.id);
-        AsyncStorage.setItem("dashboardId", body.id.toString());
+        await AsyncStorage.setItem("dashboardInfo", JSON.stringify(body));
+        console.log("DASHBOARD INFO", body)
+        const dashboardId = body.id.toString()
+        await AsyncStorage.setItem("dashboardId", dashboardId);
       } else {
         console.error("Dashboard data is missing in the response.");
       }
@@ -76,6 +78,7 @@ const AuthProvider = ({ children }) => {
 
         const body = response.data;
         setUserInfo(body);
+        console.log(body);
         AsyncStorage.setItem("userInfo", JSON.stringify(body));
 
         postDashboard();

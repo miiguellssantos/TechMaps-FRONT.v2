@@ -11,7 +11,6 @@ const RoadmapsPage = ({ navigation }) => {
     <SafeAreaView style={styles.body}>
       <PageHeader navigation={navigation} pageName="ROADMAPS" />
       <View>
-        <RoadmapList />
         <CreateRoadmapButton />
       </View>
     </SafeAreaView>

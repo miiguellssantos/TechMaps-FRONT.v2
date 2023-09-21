@@ -19,7 +19,7 @@ const SettingsPage = ({ navigation }) => {
       </Pressable>
 
       <TouchableOpacity
-        style={logoutButton}
+        style={styles.logoutButton}
         onPress={() => {
           logout();
         }}

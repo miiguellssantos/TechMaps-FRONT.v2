@@ -11,8 +11,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import React, { useContext, useState } from "react";
 import styles from "./style";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { AuthContext } from "../../../context/AuthContext";
+import InputField from "../../../components/InputField/InputField";
 
-const LoginScreen = ({}) => {
+const LoginScreen = ({ navigation }) => {
   const { login } = useContext(AuthContext);
 
   const [username, setUsername] = useState(null);
