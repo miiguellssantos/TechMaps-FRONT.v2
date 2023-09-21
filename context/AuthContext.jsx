@@ -5,7 +5,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const API_URL = "http://192.168.0.106:8080";
+  const API_URL = "http://10.115.74.24:8080";
 
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState("");
@@ -88,8 +88,7 @@ const AuthProvider = ({ children }) => {
         refreshToken();
       }
     } catch (error) {
-      console.log(result.response.data)
-      console.error("Erro de login: ", error);
+      console.error("Erro de login: ", error.response.data);
     }
   };
 
@@ -123,7 +122,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const createRoadmap = async (nomeRoadmap, tipoRoadmap) => {
+  const createRoadmap = async (nomeRoadmap, tipoRoadmap, languageRoadmap) => {
     try {
       const dashboardId = await AsyncStorage.getItem("dashboardId");
       const authorizationHeader = await AsyncStorage.getItem("userToken");
@@ -133,12 +132,13 @@ const AuthProvider = ({ children }) => {
         {
           title: nomeRoadmap,
           type: tipoRoadmap,
-          dashboardId: dashboardId
+          language: languageRoadmap,
+          color: 5,
         },
         {
           headers: {
-            Authorization: authorizationHeader
-          }
+            Authorization: authorizationHeader,
+          },
         }
       );
 
@@ -150,9 +150,35 @@ const AuthProvider = ({ children }) => {
       } else {
         console.error("Dashboard data is missing in the response.");
       }
-      console.log(result.response.data);
     } catch (error) {
       console.error("Não foi possível criar o Roadmap: ", error.response.data);
+    }
+  };
+
+  const fetchRoadmaps = async ({ setRoadmaps }) => {
+    const dashboardId = await AsyncStorage.getItem("dashboardId");
+    const authorizationHeader = await AsyncStorage.getItem("userToken");
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/v1/dashboards/${dashboardId}/roadmaps`,
+        {
+          headers: {
+            Authorization: authorizationHeader,
+          },
+        }
+      );
+
+      console.log(response.status)
+
+      if (response.status === 200) {
+        const body = response.data;
+        console.log("LISTA DE ROADMAPS: ", body);
+        setRoadmaps(body);
+      } else {
+        console.error("Roadmap data is missing in the response.");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar a lista de roadmaps:", error.response.data);
     }
   };
 
@@ -172,6 +198,7 @@ const AuthProvider = ({ children }) => {
         dashboardInfo,
         roadmapInfo,
         createRoadmap,
+        fetchRoadmaps,
         login,
         logout,
       }}

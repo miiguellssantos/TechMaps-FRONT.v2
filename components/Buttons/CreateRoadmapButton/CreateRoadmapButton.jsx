@@ -12,7 +12,7 @@ const CreateRoadmapButton = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [nomeRoadmap, setNomeRoadmap] = useState("");
   const [tipoRoadmap, setTipoRoadmap] = useState("");
-  const [linguagemRoadmap, setLinguagemRoadmap] = useState("");
+  const [languageRoadmap, setLanguageRoadmap] = useState("")
   return (
     <View>
       <TouchableOpacity
@@ -62,6 +62,16 @@ const CreateRoadmapButton = () => {
                 onChangeText={(text) => setTipoRoadmap(text)}
               />
             </View>
+
+            <View>
+              <Text style={styles.label}>Linguagem: </Text>
+              <InputField
+                label="Linguagem"
+                icon="webpack"
+                value={languageRoadmap}
+                onChangeText={(text) => setLanguageRoadmap(text)}
+              />
+            </View>
           </View>
         </View>
         <View style={styles.buttons}>
@@ -78,7 +88,7 @@ const CreateRoadmapButton = () => {
             style={styles.btnSalvar}
             onPress={() => {
               setModalVisible(!isModalVisible);
-              createRoadmap(nomeRoadmap, tipoRoadmap, linguagemRoadmap);
+              createRoadmap(nomeRoadmap, tipoRoadmap, languageRoadmap);
             }}
           >
             <Text style={styles.txtBtnSalvar}>Salvar</Text>
