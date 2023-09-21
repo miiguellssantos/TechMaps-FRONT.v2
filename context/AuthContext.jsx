@@ -14,6 +14,8 @@ const AuthProvider = ({ children }) => {
   const [dashboardId, setDashboardId] = useState("");
   const [dashboardInfo, setDashboardInfo] = useState("");
 
+  
+
   const refreshToken = async () => {
     try {
       setUserToken(await AsyncStorage.getItem("userToken"));
