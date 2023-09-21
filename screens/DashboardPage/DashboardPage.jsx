@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "../Roadmaps/style";
+import styles from "../RoadmapsPage/style";
 
 import PageHeader from "../../components/PageHeader/PageHeader";
 import Dashboard from "../../components/Dashboard/Dashboard";

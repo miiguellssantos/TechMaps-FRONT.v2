@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
-import styles from "./styles";
+import styles from "./style";
 
 const OnBoardingScreen = () => {
   return (

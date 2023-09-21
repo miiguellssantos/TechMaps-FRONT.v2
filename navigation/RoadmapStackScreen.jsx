@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Roadmaps from "../screens/Roadmaps/Roadmaps";
+import Roadmaps from "../screens/RoadmapsPage/RoadmapsPage";
 import Profile from "../screens/ProfilePage/ProfilePage";
 import SettingsPage from "../screens/SettingsPage/SettingsPage";
 

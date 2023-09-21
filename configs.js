@@ -1,1 +1,1 @@
-export default API_URL = "http://192.168.15.1/8080"
+export default API_URL = "http://192.168.0.106/8080"

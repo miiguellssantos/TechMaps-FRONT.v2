@@ -1,7 +1,7 @@
 import { View, TextInput } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React from "react";
-import styles from "./style";
+import styles from "./style.jsx";
 
 const InputField = ({
     label,

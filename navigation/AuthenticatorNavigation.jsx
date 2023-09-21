@@ -8,7 +8,7 @@ import OnBoardingScreen from "../screens/OnBoardingScreen/OnBoardingScreen";
 
 const Stack = createNativeStackNavigator();
 
-const AythenticatorNavigation = () => {
+const AuthenticatorNavigation = () => {
   const SCREEN_NAMES = {
     ONBOARDING: "ONBOARDINGSCREEN",
     LOGIN: "LOGIN",
@@ -26,4 +26,4 @@ const AythenticatorNavigation = () => {
   );
 };
 
-export default AythenticatorNavigation;
+export default AuthenticatorNavigation;
