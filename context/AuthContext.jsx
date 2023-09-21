@@ -13,8 +13,7 @@ const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState("");
   const [dashboardId, setDashboardId] = useState("");
   const [dashboardInfo, setDashboardInfo] = useState("");
-
-  
+  const [roadmapInfo, setRoadmapInfo] = useState("");
 
   const refreshToken = async () => {
     try {
@@ -38,7 +37,7 @@ const AuthProvider = ({ children }) => {
   const postDashboard = async () => {
     try {
       const userInfo = JSON.parse(await AsyncStorage.getItem("userInfo"));
-      const userId = userInfo.id
+      const userId = userInfo.id;
       const authorizationHeader = await AsyncStorage.getItem("userToken");
 
       const response = await axios.post(
@@ -55,8 +54,9 @@ const AuthProvider = ({ children }) => {
         const body = response.data;
         setDashboardInfo(body);
         await AsyncStorage.setItem("dashboardInfo", JSON.stringify(body));
-        console.log("DASHBOARD INFO", body)
-        const dashboardId = body.id.toString()
+        console.log("DASHBOARD INFO", body);
+        const dashboardId = body.id.toString();
+        console.log("DASHBOARD ID: ", dashboardId);
         await AsyncStorage.setItem("dashboardId", dashboardId);
       } else {
         console.error("Dashboard data is missing in the response.");
@@ -76,6 +76,7 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         const authorizationHeader = response.headers.authorization;
         setUserToken(authorizationHeader);
+        console.log("JWT: ", authorizationHeader);
         AsyncStorage.setItem("userToken", authorizationHeader);
 
         const body = response.data;
@@ -87,6 +88,7 @@ const AuthProvider = ({ children }) => {
         refreshToken();
       }
     } catch (error) {
+      console.log(result.response.data)
       console.error("Erro de login: ", error);
     }
   };
@@ -121,6 +123,39 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const createRoadmap = async (nomeRoadmap, tipoRoadmap) => {
+    try {
+      const dashboardId = await AsyncStorage.getItem("dashboardId");
+      const authorizationHeader = await AsyncStorage.getItem("userToken");
+
+      const response = await axios.post(
+        `${API_URL}/api/v1/dashboards/${dashboardId}/roadmaps`,
+        {
+          title: nomeRoadmap,
+          type: tipoRoadmap,
+          dashboardId: dashboardId
+        },
+        {
+          headers: {
+            Authorization: authorizationHeader
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        const body = response.data;
+        setRoadmapInfo(body);
+        await AsyncStorage.setItem("roadmapInfo", JSON.stringify(body));
+        console.log("ROADMAP INFO", body);
+      } else {
+        console.error("Dashboard data is missing in the response.");
+      }
+      console.log(result.response.data);
+    } catch (error) {
+      console.error("Não foi possível criar o Roadmap: ", error.response.data);
+    }
+  };
+
   useEffect(() => {
     isLoggedIn();
     const intervalId = setInterval(refreshToken, 30 * 60 * 1000);
@@ -135,6 +170,8 @@ const AuthProvider = ({ children }) => {
         userInfo,
         dashboardId,
         dashboardInfo,
+        roadmapInfo,
+        createRoadmap,
         login,
         logout,
       }}

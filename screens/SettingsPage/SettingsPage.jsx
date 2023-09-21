@@ -15,7 +15,7 @@ const SettingsPage = ({ navigation }) => {
           navigation.goBack();
         }}
       >
-        <Text style={styles.backText}>"Voltar"</Text>
+        <Text style={styles.backText}>Voltar</Text>
       </Pressable>
 
       <TouchableOpacity

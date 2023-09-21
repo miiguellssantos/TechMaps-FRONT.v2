@@ -9,7 +9,7 @@ const InputField = ({
     inputType,
     keyboardType,
     value, 
-    onChangeText
+    onChangeText,
   }) => {
     return (
       <View style={styles.inputView}>
