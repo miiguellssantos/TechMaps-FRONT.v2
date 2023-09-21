@@ -5,6 +5,7 @@ import styles from "./style";
 
 import PageHeader from "../../components/PageHeader/PageHeader";
 import CreateRoadmapButton from "../../components/Buttons/CreateRoadmapButton/CreateRoadmapButton";
+import RoadmapList from "../../components/RoadmapList/RoadmapList";
 
 const RoadmapsPage = ({ navigation }) => {
   return (
@@ -12,6 +13,7 @@ const RoadmapsPage = ({ navigation }) => {
       <PageHeader navigation={navigation} pageName="ROADMAPS" />
       <View>
         <CreateRoadmapButton />
+        <RoadmapList />
       </View>
     </SafeAreaView>
   );
