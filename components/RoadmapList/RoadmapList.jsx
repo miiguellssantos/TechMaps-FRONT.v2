@@ -5,9 +5,9 @@ import { AuthContext } from "../../context/AuthContext";
 import RoadmapItem from "../RoadmapItem/RoadmapItem";
 
 const RoadmapList = () => {
-    const { fetchRoadmaps } = useContext(AuthContext)
+    const { fetchRoadmaps, roadmapInfo } = useContext(AuthContext)
   const { dashboardId, userToken } = useContext(AuthContext);
-  const [roadmaps, setRoadmaps] = useState([]);
+  const [roadmaps, setRoadmaps] = useState([roadmapInfo]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
