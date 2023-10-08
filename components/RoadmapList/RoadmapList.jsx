@@ -3,18 +3,18 @@ import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import RoadmapItem from "../RoadmapItem/RoadmapItem";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RoadmapList = () => {
-    const { fetchRoadmaps, roadmapInfo } = useContext(AuthContext)
-  const { dashboardId, userToken } = useContext(AuthContext);
-  const [roadmaps, setRoadmaps] = useState([roadmapInfo]);
+  const roadmapList = AsyncStorage.getItem("roadmaps");
+  console.log(roadmapList);
+  const [roadmaps, setRoadmaps] = useState([roadmapList]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchRoadmaps(setRoadmaps, setLoading);
-  }, []);
-
+   // setRoadmaps(roadmapList). .
+  console.log("$$$$$$$$$$$$$$$$");
   if (loading) {
+    console.log("@@@@@@@@@@@@");
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="small" color="#FFF" />
@@ -23,13 +23,26 @@ const RoadmapList = () => {
     );
   }
 
-  return (
-    <ScrollView>
-      {roadmaps.map((roadmap) => (
-        <RoadmapItem key={roadmap.id} roadmap={roadmap} />
-      ))}
-    </ScrollView>
-  );
+  if (roadmaps == []) {
+    console.log("**********");
+    return (
+      <View style={styles.noRoadmapsContainer}>
+        <Text style={styles.noRoadmapsText}>
+          Você ainda não possui nenhum roadmap.
+        </Text>
+      </View>
+    );
+  } else {
+    console.log("%%%%%%%%%%%%");
+    console.log(roadmaps);
+    return (
+      <ScrollView>
+        {roadmaps.map((roadmap) => (
+          <RoadmapItem key={roadmap.id} roadmap={roadmap} />
+        ))}
+      </ScrollView>
+    );
+  }
 };
 
 const styles = {

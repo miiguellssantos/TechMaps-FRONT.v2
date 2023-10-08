@@ -5,7 +5,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const API_URL = "http://10.115.71.51:8080";
+  const API_URL = "http://192.168.15.73:8080";
 
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState("");
@@ -62,7 +62,7 @@ const AuthProvider = ({ children }) => {
         console.error("Dashboard data is missing in the response.");
       }
     } catch (error) {
-      console.error("Erro na criação de dashboard:", error);
+      console.error("Erro na criação de dashboard:", error.response.data);
     }
   };
 
@@ -84,12 +84,12 @@ const AuthProvider = ({ children }) => {
         console.log(body);
         AsyncStorage.setItem("userInfo", JSON.stringify(body));
 
-        postDashboard();
-        
+        await postDashboard();
         refreshToken();
+        fetchRoadmaps();
       }
     } catch (error) {
-      console.error("Erro de login: ", error.response.data);
+      console.error("Erro de login:", error.response.data);
     }
   };
 
@@ -99,12 +99,18 @@ const AuthProvider = ({ children }) => {
     setUserInfo(null);
     setDashboardId(null);
     setDashboardInfo(null);
+    setIsLoading(false);
+    deleteAll();
+  };
+
+  const deleteAll = () => {
     AsyncStorage.removeItem("userInfo");
     AsyncStorage.removeItem("userToken");
     AsyncStorage.removeItem("dashboardId");
     AsyncStorage.removeItem("dashboardInfo");
-    setIsLoading(false);
-  };
+    AsyncStorage.removeItem("roadmapInfo");
+    AsyncStorage.removeItem("roadmaps")
+  }
 
   const isLoggedIn = async () => {
     try {
@@ -154,9 +160,11 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Não foi possível criar o Roadmap: ", error.response.data);
     }
+
+    fetchRoadmaps();
   };
 
-  const fetchRoadmaps = async ({ setRoadmaps }) => {
+  const fetchRoadmaps = async () => {
     const dashboardId = await AsyncStorage.getItem("dashboardId");
     const authorizationHeader = await AsyncStorage.getItem("userToken");
     try {
@@ -169,12 +177,10 @@ const AuthProvider = ({ children }) => {
         }
       );
 
-      console.log(response.status);
-
       if (response.status === 200) {
         const body = response.data;
-        console.log("LISTA DE ROADMAPS: ", body);
-        setRoadmaps(body);
+        console.log("LISTA DE ROADMAPS:", body);
+        await AsyncStorage.setItem("roadmaps", JSON.stringify(body))
       } else {
         console.error("Roadmap data is missing in the response.");
       }

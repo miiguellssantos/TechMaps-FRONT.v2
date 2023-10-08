@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./style";
 
 const RoadmapItem = ({ roadmap }) => {
-
+  
   const roadmapTitle = roadmap.title;
   const timeSpent = roadmap.totalTime;
   const commitsQuantity = roadmap.commits;
