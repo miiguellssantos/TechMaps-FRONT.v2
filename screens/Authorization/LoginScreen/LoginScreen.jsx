@@ -17,8 +17,8 @@ import InputField from "../../../components/InputField/InputField";
 const LoginScreen = ({ navigation }) => {
   const { login } = useContext(AuthContext);
 
-  const [username, setUsername] = useState(null);
-  const [senha, setSenha] = useState(null);
+  const [username, setUsername] = useState("miguel");
+  const [senha, setSenha] = useState("senha");
 
   return (
     <LinearGradient

@@ -1,20 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
-import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
-import RoadmapItem from "../RoadmapItem/RoadmapItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState, useEffect, useContext } from "react";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import RoadmapItem from "../RoadmapItem/RoadmapItem";
+import { AuthContext } from "../../context/AuthContext";
 
 const RoadmapList = () => {
-  const roadmapList = AsyncStorage.getItem("roadmaps");
-  console.log(roadmapList);
-  const [roadmaps, setRoadmaps] = useState([roadmapList]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); 
+  const { roadmapsList } = useContext(AuthContext)
 
-   // setRoadmaps(roadmapList). .
-  console.log("$$$$$$$$$$$$$$$$");
   if (loading) {
-    console.log("@@@@@@@@@@@@");
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="small" color="#FFF" />
@@ -23,8 +17,7 @@ const RoadmapList = () => {
     );
   }
 
-  if (roadmaps == []) {
-    console.log("**********");
+  if (roadmapsList == []) {
     return (
       <View style={styles.noRoadmapsContainer}>
         <Text style={styles.noRoadmapsText}>
@@ -33,11 +26,9 @@ const RoadmapList = () => {
       </View>
     );
   } else {
-    console.log("%%%%%%%%%%%%");
-    console.log(roadmaps);
     return (
       <ScrollView>
-        {roadmaps.map((roadmap) => (
+        {roadmapsList.map((roadmap) => (
           <RoadmapItem key={roadmap.id} roadmap={roadmap} />
         ))}
       </ScrollView>

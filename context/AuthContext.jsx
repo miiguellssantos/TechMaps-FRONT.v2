@@ -5,15 +5,15 @@ import React, { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const API_URL = "http://192.168.15.73:8080";
+  const API_URL = "http://10.115.74.46:8080";
 
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState("");
   const [userInfo, setUserInfo] = useState("");
-  const [userId, setUserId] = useState("");
   const [dashboardId, setDashboardId] = useState("");
   const [dashboardInfo, setDashboardInfo] = useState("");
   const [roadmapInfo, setRoadmapInfo] = useState("");
+  const [roadmapsList, setRoadmapsList] = useState([])
 
   const refreshToken = async () => {
     try {
@@ -109,8 +109,8 @@ const AuthProvider = ({ children }) => {
     AsyncStorage.removeItem("dashboardId");
     AsyncStorage.removeItem("dashboardInfo");
     AsyncStorage.removeItem("roadmapInfo");
-    AsyncStorage.removeItem("roadmaps")
-  }
+    AsyncStorage.removeItem("roadmaps");
+  };
 
   const isLoggedIn = async () => {
     try {
@@ -179,8 +179,7 @@ const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         const body = response.data;
-        console.log("LISTA DE ROADMAPS:", body);
-        await AsyncStorage.setItem("roadmaps", JSON.stringify(body))
+        setRoadmapsList(body)
       } else {
         console.error("Roadmap data is missing in the response.");
       }
@@ -208,6 +207,7 @@ const AuthProvider = ({ children }) => {
         fetchRoadmaps,
         login,
         logout,
+        roadmapsList
       }}
     >
       {children}
