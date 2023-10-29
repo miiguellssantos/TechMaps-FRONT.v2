@@ -5,7 +5,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const API_URL = "http://10.115.74.46:8080";
+  const API_URL = "http://10.10.0.223:8080";
 
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState("");

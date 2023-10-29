@@ -89,6 +89,9 @@ const CreateRoadmapButton = () => {
             onPress={() => {
               setModalVisible(!isModalVisible);
               createRoadmap(nomeRoadmap, tipoRoadmap, languageRoadmap);
+              setNomeRoadmap("")
+              setTipoRoadmap("")
+              setLanguageRoadmap("")
             }}
           >
             <Text style={styles.txtBtnSalvar}>Salvar</Text>

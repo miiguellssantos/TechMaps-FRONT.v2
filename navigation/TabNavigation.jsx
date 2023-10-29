@@ -24,10 +24,8 @@ const TabNavigation = ({ navigation }) => {
             tabBarInactiveTintColor: "#306B34",
             tabBarStyle: {
               background: "linear-gradient(93deg, #EEE5E9 0%, #ACE894 100%)",
-              bottom: 10,
               position: "absolute",
               borderRadius: 10,
-              marginHorizontal: 10,
               elevation: 0,
               height: 50,
             },
