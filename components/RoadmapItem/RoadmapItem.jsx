@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./style";
+import { AuthContext } from "../../context/AuthContext";
 
 const RoadmapItem = ({ roadmap }) => {
-  
+  const { postStages } = useContext(AuthContext)
   const roadmapTitle = roadmap.title;
   const timeSpent = roadmap.totalTime;
   const commitsQuantity = roadmap.commits;
@@ -37,7 +38,9 @@ const RoadmapItem = ({ roadmap }) => {
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => {
+          // navigation.navigate(RoadmapStage, {roadmap: roadmap})
+          }}>
           <Icon
             style={{ marginRight: 10 }}
             name={"location-enter"}
