@@ -157,12 +157,11 @@ const AuthProvider = ({ children }) => {
       } else {
         console.error("Dashboard data is missing in the response.");
       }
+      fetchRoadmaps();
     } catch (error) {
       console.error("Não foi possível criar o Roadmap: ", error.response.data);
     }
 
-    fetchRoadmaps();
-    await postStages(roadmapInfo.id)
   };
 
   const fetchRoadmaps = async () => {
@@ -189,50 +188,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const postStages = async (roadmapId) => {
-    const authorizationHeader = await AsyncStorage.getItem("userToken");
-    console.log(authorizationHeader)
-    try{
-      const response = await axios.post(`${API_URL}/api/v1/roadmaps/${roadmapId}/stages/addStages`, 
-      null,
-      {
-        headers: {
-          Authorization: authorizationHeader,
-        },
-      })
-
-      if(response.status === 200){
-        const body = response.data;
-        console.log(body)
-        console.log("Criação dos STAGES ocorreu corretamente.")
-      }
-    }catch(error){
-      console.error("Erro ao criar os Stages: ", error.response.data)
-    }
-
-    // postTasks()
-  }
-
-  const postTasks = async (stageId) => {
-    const authorizationHeader = await AsyncStorage.getItem("userToken");
-    try{
-      const response = axios.post(`${API_URL}/api/v1/stages/${stageId}/tasks`, 
-      null,
-      {
-        headers: {
-          Authorization: authorizationHeader,
-        }
-      }
-      )
-
-      if(response.status === 200) {
-        console.log("TASKS criadas com sucesso.")
-      }
-    }catch(error){
-      console.log("Erro ao criar as TASKS: ", error.response.data)
-    }
-  }
-
   useEffect(() => {
     isLoggedIn();
     const intervalId = setInterval(refreshToken, 30 * 60 * 1000);
@@ -253,7 +208,6 @@ const AuthProvider = ({ children }) => {
         login,
         logout,
         roadmapsList,
-        postStages
       }}
     >
       {children}
