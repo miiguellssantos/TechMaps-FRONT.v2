@@ -39,8 +39,8 @@ Sua contribuição é bem-vinda! Se deseja melhorar o TechMaps, sugerir recursos
 
 Para executar o TechMaps localmente, siga estas instruções:
 
-1. Clone este repositório: `git clone https://github.com/seu-usuario/TechMaps.git`.
-2. Navegue até o diretório do projeto: `cd TechMaps`.
+1. Clone este repositório: `git clone https://github.com/miiguellssantos/TechMaps-FRONT.v2.git`.
+2. Navegue até o diretório do projeto: `cd TechMaps-FRONT.v2`.
 3. Instale as dependências: `npm install`.
 4. Inicie o aplicativo: `npx expo start`.
 
