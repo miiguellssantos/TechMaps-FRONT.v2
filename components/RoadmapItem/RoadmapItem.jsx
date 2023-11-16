@@ -4,12 +4,22 @@ import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./style";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+
+const languageIcons = {
+  JAVA : "language-java",
+  PYTHON: "language-python",
+  JAVASCRIPT: "language-javascript"
+}
 
 const RoadmapItem = ({ roadmap }) => {
   const { postStages } = useContext(AuthContext)
   const roadmapTitle = roadmap.title;
   const timeSpent = roadmap.totalTime;
   const commitsQuantity = roadmap.commits;
+  const language = roadmap.language
+  const iconName = languageIcons[roadmap.language];
+  const navigation = useNavigation();
 
   return (
     <LinearGradient
@@ -20,7 +30,7 @@ const RoadmapItem = ({ roadmap }) => {
       end={{ x: 1, y: 1 }}
     >
       <View style={styles.icon}>
-        <Icon name={"language-python"} size={80} color={"#FFF"} />
+        <Icon name={iconName} size={80} color={"#FFF"} />
         <View style={styles.iconChild} />
       </View>
 
@@ -39,7 +49,7 @@ const RoadmapItem = ({ roadmap }) => {
           </View>
         </View>
         <TouchableOpacity onPress={() => {
-          // navigation.navigate(RoadmapStage, {roadmap: roadmap})
+          navigation.navigate("TaskPage", {language:language, title:roadmapTitle})
           }}>
           <Icon
             style={{ marginRight: 10 }}

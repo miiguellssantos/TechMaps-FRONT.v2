@@ -8,8 +8,8 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [userToken, setUserToken] = useState("");
-  const [userInfo, setUserInfo] = useState("");
+  const [userToken, setUserToken] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const [dashboardId, setDashboardId] = useState("");
   const [dashboardInfo, setDashboardInfo] = useState("");
   const [roadmapInfo, setRoadmapInfo] = useState("");

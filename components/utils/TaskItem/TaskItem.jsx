@@ -1,23 +1,15 @@
-import { View, Text, Pressable } from "react-native";
 import React from "react";
-import { Link, LinkingContext } from "@react-navigation/native";
+import { Text, View } from "react-native";
+import styles from "./style";
 
 const TaskItem = (task) => {
-  const { title, description, links } = task;
-
-  function linkExternal(link) {
-    LinkingContext.openURL({link});
-  }
+  const title = task.title
+  const description = task.description
 
   return (
-    <View>
-      <Text>{title}</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
       <Text>{description}</Text>
-      {links.map((link) => {
-        <Pressable onPress={linkExternal(link)}>
-            <Text>{link}</Text>
-        </Pressable>
-      })}
     </View>
   );
 };

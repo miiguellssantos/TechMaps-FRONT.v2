@@ -10,9 +10,9 @@ import InputField from "../../InputField/InputField";
 const CreateRoadmapButton = () => {
   const { createRoadmap } = useContext(AuthContext);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [nomeRoadmap, setNomeRoadmap] = useState("");
-  const [tipoRoadmap, setTipoRoadmap] = useState("");
-  const [languageRoadmap, setLanguageRoadmap] = useState("")
+  const [nomeRoadmap, setNomeRoadmap] = useState("PYTHON 101");
+  const [tipoRoadmap, setTipoRoadmap] = useState("BACKEND");
+  const [languageRoadmap, setLanguageRoadmap] = useState("PYTHON")
   return (
     <View>
       <TouchableOpacity
