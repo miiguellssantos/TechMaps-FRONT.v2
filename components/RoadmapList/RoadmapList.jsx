@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 const RoadmapList = () => {
   const [loading, setLoading] = useState(false); 
-  const { roadmapsList } = useContext(AuthContext)
+  const { roadmapsList, fetchRoadmaps } = useContext(AuthContext)
 
   if (loading) {
     return (

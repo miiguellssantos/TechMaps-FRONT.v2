@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./style";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import { timeFormat } from "../../utils/timeFormat";
 
 const languageIcons = {
   JAVA : "language-java",
@@ -39,13 +40,7 @@ const RoadmapItem = ({ roadmap }) => {
           <Text style={styles.roadmapItemTitle}>{roadmapTitle}</Text>
           <View style={styles.statLine1}>
             <Icon name={"clock-time-nine-outline"} size={25} color={"#FFF"} />
-            <Text style={styles.textTypo}>{timeSpent}</Text>
-          </View>
-          <View style={styles.statLine1}>
-            <Icon name={"source-commit"} size={25} color={"#FFF"} />
-            <Text style={[styles.text2, styles.textTypo]}>
-              {commitsQuantity}
-            </Text>
+            <Text style={styles.textTypo}>{timeFormat(timeSpent)}</Text>
           </View>
         </View>
         <TouchableOpacity onPress={() => {

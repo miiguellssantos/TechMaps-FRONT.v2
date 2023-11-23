@@ -61,3 +61,143 @@ export const pythonTasks = [
     ],
   },
 ];
+
+export const javaTasks = [
+  {
+    id: 1,
+    title: "Sintaxe Básica",
+    description:
+      "Entender os conceitos básicos é a chave para uma base sólida. Nesta seção, aprenda os termos básicos, convenções de nomenclatura, palavras reservadas, condições, funções, estruturas de dados, POO (Programação Orientada a Objetos), pacotes, etc.",
+    links: [
+      "https://www.geeksforgeeks.org/java-basic-syntax/",
+      "https://www.youtube.com/watch?v=81piDKqPxjQ",
+      "https://www.youtube.com/watch?v=RRubcjpTkks",
+    ],
+  },
+  {
+    id: 2,
+    title: "Tipos de dado / Variáveis",
+    description:
+      "Variável em Java é um recipiente de dados que armazena os valores durante a execução de um programa Java. Cada variável é atribuída a um tipo de dados, que designa o tipo e a quantidade de valores que pode conter. Uma variável é um nome de local na memória onde os dados são guardados. As variáveis em Java têm principalmente três tipos: Local, Instância e Estática.",
+    links: [
+      "https://www.guru99.com/java-variables.html",
+      "https://www.javatpoint.com/java-variables",
+      "https://www.javatpoint.com/java-data-types",
+    ],
+  },
+  {
+    id: 3,
+    title: "Condicionais",
+    description:
+      "Java possui os condicionais IF, ELSE, ELSE IF, SWITCH e ?: para condições em uma linha só.",
+    links: [
+      "https://www.educative.io/answers/what-are-conditional-statements-in-programming",
+      "https://www.javatpoint.com/java-if-else",
+      "https://youtu.be/ldYLYRNaucM",
+      "https://youtu.be/mA23x39DjbI",
+    ],
+  },
+  {
+    id: 4,
+    title: "Funções",
+    description:
+      " Um método ou função é uma maneira de realizar uma determinada tarefa. Da mesma forma, na programação, como em Java, um método é um bloco de código escrito para executar uma tarefa específica repetidamente. Ele oferece a reutilização de código: escrevemos a função uma vez e a utilizamos várias vezes. Isso segue o princípio 'DRY', que significa 'Don't Repeat Yourself' (Não repita a si mesmo).",
+    links: [
+      "https://www.javatpoint.com/method-in-java",
+      "https://www.geeksforgeeks.org/methods-in-java/",
+      "https://www.w3schools.com/java/java_methods.asp",
+      "https://www.youtube.com/watch?v=vvanI8NRlSI",
+    ],
+  },
+  {
+    id: 5,
+    title: "Loops",
+    description:
+      "Em Java e em outras linguagens de programação, os loops são usados para iterar uma parte do programa várias vezes. Existem quatro tipos de loops em Java: for, forEach, while e do...while.",
+    links: [
+      "https://www.javatpoint.com/java-for-loop",
+      "https://www.programiz.com/java-programming/for-loop",
+    ],
+  },
+  {
+    id: 6,
+    title: "Exceptions",
+    description:
+      "O tratamento de exceções em Java é um dos meios eficazes para lidar com erros em tempo de execução, de modo que o fluxo regular da aplicação possa ser preservado. O tratamento de exceções em Java é um mecanismo para lidar com erros em tempo de execução, como ClassNotFoundException, IOException, SQLException, RemoteException, entre outros.",
+    links: [
+      "https://www.geeksforgeeks.org/exceptions-in-java/",
+      "https://www.youtube.com/watch?v=W-N2ltgU-X4",
+    ],
+  },
+];
+
+export const javascriptTasks = [
+  {
+    id: 1,
+    title: "O que é JavaScript?",
+    description:
+      "JavaScript, frequentemente abreviado como JS, é uma linguagem de programação que constitui uma das tecnologias fundamentais da World Wide Web, juntamente com HTML e CSS. Ela permite adicionar interatividade às páginas da web, como sliders, alertas, interações de clique, pop-ups, entre outros elementos que você pode ter visto em diferentes sites, todos construídos usando JavaScript. Além de ser usado no navegador, o JavaScript também é utilizado em outros ambientes não relacionados ao navegador, como o Node.js para escrever código do lado do servidor em JavaScript, o Electron para criar aplicativos de desktop, o React Native para aplicativos móveis, e assim por diante.",
+    links: [
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+      "https://www.w3schools.com/js/",
+      "https://exploringjs.com/",
+      "https://www.youtube.com/watch?v=PkZNo7MFNFg",
+    ],
+  },
+  {
+    id: 2,
+    title: "Versões do JavaScript",
+    description:
+      "JavaScript foi criado por Brendan Eich e, em 1997, tornou-se um padrão ECMA. ECMAScript é o nome oficial da linguagem. As versões do ECMAScript incluem ES1, ES2, ES3, ES5 e ES6. Cada uma dessas versões trouxe novos recursos, melhorias e atualizações à linguagem JavaScript.",
+    links: [
+      "https://www.educative.io/blog/javascript-versions-history",
+      "https://roadmap.sh/guides/history-of-javascript",
+    ],
+  },
+  {
+    id: 3,
+    title: "Declaração de Variáveis",
+    description:
+      "Para usar variáveis em JavaScript, primeiro devemos primeiro devemos criá-la e declará-la. Para declarar, usamos uma das três palavras chave antes do nome das variáveis: var, let ou const.",
+    links: [
+      "https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Variables",
+      "https://www.codeguage.com/courses/js/variables",
+    ],
+  },
+  {
+    id: 4,
+    title: "Tipos de Dados",
+    description:
+      "Tipo de dados refere-se ao tipo de dados que uma variável JavaScript pode armazenar. Existem sete tipos de dados primitivos em JavaScript (Number, BigInt, String, Boolean, Null, Undefined e Symbol). Objetos são não primitivos.",
+    links: [
+      "https://www.codeguage.com/courses/js/data-types",
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures",
+      "https://www.w3schools.com/js/js_datatypes.asp",
+      "https://javascript.info/types",
+    ],
+  },
+  {
+    id: 5,
+    title: "Objetos",
+    description:
+      "Um objeto JavaScript é uma estrutura de dados que nos permite ter pares de chave-valor; assim, podemos ter chaves distintas e cada chave é mapeada para um valor que pode ser de qualquer tipo de dado do JavaScript. Comparando com um objeto do mundo real, uma caneta é um objeto com várias propriedades, como cor, design, o material do qual é feita, etc. Da mesma forma, objetos JavaScript podem ter propriedades que definem suas características.",
+    links: [
+      "https://javascript.info/object",
+      "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects",
+      "https://www.w3schools.com/js/js_object_definition.asp",
+      "https://www.geeksforgeeks.org/objects-in-javascript/",
+    ],
+  },
+  {
+    id: 6,
+    title: "Type Casting",
+    description:
+      "Conversão de tipo (ou typecasting) significa a transferência de dados de um tipo de dado para outro. A conversão implícita ocorre quando o compilador (em linguagens compiladas) ou tempo de execução (em linguagens de script como JavaScript) converte automaticamente tipos de dados. O código-fonte também pode explicitamente requerer que uma conversão ocorra.",
+    links: [
+      "https://javascript.info/type-conversions",
+      "https://www.w3schools.com/js/js_type_conversion.asp",
+      "https://www.tutorialspoint.com/type-casting-in-javascript",
+      "https://www.geeksforgeeks.org/javascript-type-conversion",
+    ],
+  },
+];

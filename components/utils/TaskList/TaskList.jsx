@@ -1,20 +1,33 @@
 import { View, Text, ScrollView } from "react-native";
 import React, { useState } from "react";
-import { pythonTasks } from "../../../data/taskData";
+import { pythonTasks, javaTasks, javascriptTasks } from "../../../data/taskData";
 import TaskItem from "../TaskItem/TaskItem";
 
 const TaskList = ({ language }) => {
   if (language === "PYTHON") {
-    console.log(pythonTasks);
     return (
-      <View>
-        {pythonTasks.map((task) => <TaskItem key={task.id} task={task} />)}
-      </View>
+      <ScrollView>
+        {pythonTasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </ScrollView>
     );
   } else if (language === "JAVA") {
-    javaTasks.map((task) => {
-      <TaskItem title={task.title} />;
-    });
+    return (
+      <ScrollView>
+        {javaTasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </ScrollView>
+    );
+  } else if (language === "JAVASCRIPT") {
+    return (
+      <ScrollView>
+        {javascriptTasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </ScrollView>
+    );
   }
 };
 

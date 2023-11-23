@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [dashboardId, setDashboardId] = useState("");
   const [dashboardInfo, setDashboardInfo] = useState("");
+  const [dashboardData, setDashboardData] = useState("")
   const [roadmapInfo, setRoadmapInfo] = useState("");
   const [roadmapsList, setRoadmapsList] = useState([])
 
@@ -188,6 +189,29 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchDashboardData = async () => {
+    try{
+      const response = await axios.get(
+        `${API_URL}/api/v1/dashboards/users/${userInfo.id}`,
+        {
+          headers: {
+            Authorization: userToken,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const body = response.data;
+        setDashboardData(body);
+        console.log("Data adicionada com sucesso.")
+      }else{
+        console.error('Ocorreu um erro na requisição.');
+      }
+    }catch (error){
+      console.error("Erro buscando os dados do dashboard:", error.response.data);
+    }
+  }
+
   useEffect(() => {
     isLoggedIn();
     const intervalId = setInterval(refreshToken, 30 * 60 * 1000);
@@ -202,9 +226,11 @@ const AuthProvider = ({ children }) => {
         userInfo,
         dashboardId,
         dashboardInfo,
+        dashboardData,
         roadmapInfo,
         createRoadmap,
         fetchRoadmaps,
+        fetchDashboardData,
         login,
         logout,
         roadmapsList,

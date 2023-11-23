@@ -1,10 +1,35 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "./style";
+import { AuthContext } from "../../context/AuthContext";
+import { timeFormat } from "../../utils/timeFormat";
 
 const Dashboard = () => {
+  const {dashboardData, fetchDashboardData} = useContext(AuthContext)
+  const {totalRoadmaps, totalCommits, totalTasks, totalTime} = dashboardData
+
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      fetchDashboardData();
+    }, 1000);
+
+    return () => {
+      // Limpa o intervalo quando o componente for desmontado
+      clearInterval(intervalRef.current);
+    };
+  }, [fetchDashboardData]);
+
+  // Executa somente uma vez para configurar o intervalo
+  useEffect(() => {
+    // Limpa o intervalo ao desmontar o componente
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, []);
   return (
     <LinearGradient
       style={styles.dashboard}
@@ -19,7 +44,7 @@ const Dashboard = () => {
             <Icon name={"check-circle"} size={50} color={"#fff"} />
           </View>
           <View style={[styles.texto, styles.textoSpaceBlock]}>
-            <Text style={[styles.text3, styles.textFlexBox]}>23</Text>
+            <Text style={[styles.text3, styles.textFlexBox]}>{totalRoadmaps}</Text>
             <Text
               style={[styles.roadmapsConcludos, styles.textFlexBox]}
             >{`Roadmaps\nConcluídos`}</Text>
@@ -30,7 +55,7 @@ const Dashboard = () => {
             <Icon name={"format-list-checks"} size={50} color={"#fff"} />
           </View>
           <View style={styles.textoSpaceBlock}>
-            <Text style={[styles.text4, styles.textFlexBox]}>49</Text>
+            <Text style={[styles.text4, styles.textFlexBox]}>{totalTasks}</Text>
             <Text
               style={[styles.roadmapsConcludos, styles.textFlexBox]}
             >{`Tasks\nConcluídas`}</Text>
@@ -43,7 +68,7 @@ const Dashboard = () => {
             <Icon name={"source-commit"} size={50} color={"#fff"} />
           </View>
           <View style={[styles.texto, styles.textoSpaceBlock]}>
-            <Text style={[styles.text3, styles.textFlexBox]}>65</Text>
+            <Text style={[styles.text3, styles.textFlexBox]}>{totalCommits}</Text>
             <Text
               style={[styles.roadmapsConcludos, styles.textFlexBox]}
             >{`Quantidade\nde Commits`}</Text>
@@ -54,7 +79,7 @@ const Dashboard = () => {
             <Icon name={"timer"} size={50} color={"#fff"} />
           </View>
           <View style={styles.textoSpaceBlock}>
-            <Text style={[styles.d22h2m, styles.textFlexBox]}>3d22h30m</Text>
+            <Text style={[styles.d22h2m, styles.textFlexBox]}>{timeFormat(totalTime)}</Text>
             <Text
               style={[styles.roadmapsConcludos, styles.textFlexBox]}
             >{`Tempo total de\nestudos`}</Text>
