@@ -1,10 +1,15 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, {useContext} from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "../RoadmapItem/style";
+import { timeFormat } from "../../utils/timeFormat";
+import { AuthContext } from "../../context/AuthContext";
 
-const ConcludedRoadmapItem = ({ roadmapTitle, timeSpent, commitCounter }) => {
+const ConcludedRoadmapItem = ({ roadmap }) => {
+const {id, totalTime, title, type} = roadmap
+const { createCertificate } = useContext(AuthContext)
+
   return (
     <LinearGradient
       style={styles.roadmapItem}
@@ -20,19 +25,17 @@ const ConcludedRoadmapItem = ({ roadmapTitle, timeSpent, commitCounter }) => {
 
       <View style={styles.content}>
         <View style={styles.stats}>
-          <Text style={styles.roadmapItemTitle}>{roadmapTitle}</Text>
+          <Text style={styles.roadmapItemTitle}>{title}</Text>
           <View style={styles.statLine1}>
             <View style={styles.statLineRightItem}>
               <Icon name={"clock-time-nine-outline"} size={25} color={"#FFF"} />
-              <Text style={styles.textTypo}>{timeSpent}</Text>
+              <Text style={styles.textTypo}>{timeFormat(totalTime)}</Text>
             </View>
           </View>
-          <View style={styles.statLine1}>
-            <Icon name={"source-commit"} size={25} color={"#FFF"} />
-            <Text style={[styles.text2, styles.textTypo]}>{commitCounter}</Text>
-          </View>
         </View>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => {
+          console.log(roadmap);
+          createCertificate(id)}}>
           <Icon
             style={{ marginRight: 10 }}
             name={"location-enter"}

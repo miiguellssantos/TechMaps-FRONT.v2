@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
   const [dashboardData, setDashboardData] = useState("");
   const [roadmapInfo, setRoadmapInfo] = useState("");
   const [roadmapsList, setRoadmapsList] = useState([]);
+  const [concludedRoadmapsList, setConcludedRoadmapsList] = useState([]);
 
   const refreshToken = async () => {
     try {
@@ -103,7 +104,7 @@ const AuthProvider = ({ children }) => {
           console.log("DASHBOARD ID: ", dashboardId);
           await AsyncStorage.setItem("dashboardId", dashboardId);
         } else {
-         await postDashboard()
+          await postDashboard();
         }
 
         refreshToken();
@@ -111,7 +112,7 @@ const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       Toast.show("Usuário e/ou senha incorretos.", { type: "danger" });
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -132,35 +133,6 @@ const AuthProvider = ({ children }) => {
       Toast.show("Erro ao registrar.");
     }
   };
-
-  /* const login = async (username, senha) => {
-    try {
-      const response = await axios.post(`${API_URL}/login`, {
-        username,
-        password: senha,
-      });
-
-      if (response.status === 200) {
-        const authorizationHeader = response.headers.authorization;
-        setUserToken(authorizationHeader);
-        console.log("JWT: ", authorizationHeader);
-        AsyncStorage.setItem("userToken", authorizationHeader);
-
-        const body = response.data;
-        setUserInfo(body);
-        console.log(body);
-        AsyncStorage.setItem("userInfo", JSON.stringify(body));
-
-        await postDashboard();
-        refreshToken();
-        fetchRoadmaps();
-      }else{
-        Toast.show("Usuário e/ou senha incorretos.", {type:'danger'})
-      }
-    } catch (error) {
-      Toast.show("Usuário e/ou senha incorretos.", {type:'danger'})
-    }
-  }; */
 
   const logout = () => {
     setIsLoading(true);
@@ -281,6 +253,58 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchConcludedRoadmaps = async () => {
+    const dashboardId = await AsyncStorage.getItem("dashboardId");
+    const authorizationHeader = await AsyncStorage.getItem("userToken");
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/v1/dashboards/${dashboardId}/roadmaps/completed`,
+        {
+          headers: {
+            Authorization: authorizationHeader,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const body = response.data;
+        setConcludedRoadmapsList(body);
+      } else {
+        Toast.show("Erro ao buscar os roadmaps concluídos.", {
+          type: "danger",
+        });
+      }
+    } catch (error) {
+      Toast.show("Erro ao buscar os roadmaps concluídos.", { type: "danger" });
+      console.error(
+        "Erro ao buscar a lista de roadmaps concluídosppds:",
+        error.response.data
+      );
+    }
+  };
+
+  const createCertificate = async (roadmapId) => {
+    const dashboardId = await AsyncStorage.getItem("dashboardId");
+    const authorizationHeader = await AsyncStorage.getItem("userToken");
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/v1/dashboards/${dashboardId}/roadmaps/${roadmapId}/certificate`,
+        {
+          headers: {
+            Authorization: authorizationHeader,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        Toast.show("Certificado criado com sucesso!");
+      }
+    } catch (error) {
+      Toast.show("Erro ao gerar o certificado.", { type: "danger" });
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     isLoggedIn();
     const intervalId = setInterval(refreshToken, 30 * 60 * 1000);
@@ -300,10 +324,13 @@ const AuthProvider = ({ children }) => {
         createRoadmap,
         fetchRoadmaps,
         fetchDashboardData,
+        fetchConcludedRoadmaps,
         login,
         logout,
         register,
         roadmapsList,
+        concludedRoadmapsList,
+        createCertificate,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { timeFormat } from "../../utils/timeFormat";
 
 const Dashboard = () => {
-  const {dashboardData, fetchDashboardData} = useContext(AuthContext)
+  const {dashboardData, fetchDashboardData, fetchConcludedRoadmaps} = useContext(AuthContext)
   const {totalRoadmaps, totalCommits, totalTasks, totalTime} = dashboardData
 
   const intervalRef = useRef(null);
@@ -15,6 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       fetchDashboardData();
+      fetchConcludedRoadmaps()
     }, 1000);
 
     return () => {
