@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   safeArea: {
     justifyContent: "space-around",
     color: "#FFF",
-    height: "100%",
+    height: "100%"
   },
   header: {
     flexDirection: "row",
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     overflow: "hidden",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   container: {
     paddingHorizontal: 25,

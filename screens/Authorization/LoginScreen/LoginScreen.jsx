@@ -79,29 +79,6 @@ const LoginScreen = ({ navigation }) => {
               </LinearGradient>
             </TouchableOpacity>
 
-            <Text style={styles.textLoginCom}>Ou, faça login com...</Text>
-
-            <View style={styles.buttons}>
-              <TouchableOpacity onPress={() => {}}>
-                <View style={styles.googleButton}>
-                  <Image
-                    styles={styles.logo}
-                    source={require("../../../assets/googleButton.png")}
-                  />
-                  <Text style={styles.googleText}>Google</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {}}>
-                <View style={styles.githubButton}>
-                  <Image
-                    styles={styles.logo}
-                    source={require("../../../assets/githubButton.png")}
-                  />
-                  <Text style={styles.githubText}>GitHub</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-
             <View style={styles.registerButton}>
               <Text style={{ color: "#FFF" }}> Novo por aqui? </Text>
               <TouchableOpacity onPress={() => navigation.navigate("REGISTER")}>

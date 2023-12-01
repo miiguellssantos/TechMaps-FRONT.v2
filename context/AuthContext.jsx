@@ -2,19 +2,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { createContext, useState, useEffect } from "react";
 import { API_URL } from "../utils/baseUrl";
+import { Toast } from "react-native-toast-notifications";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [dashboardId, setDashboardId] = useState("");
   const [dashboardInfo, setDashboardInfo] = useState("");
-  const [dashboardData, setDashboardData] = useState("")
+  const [dashboardData, setDashboardData] = useState("");
   const [roadmapInfo, setRoadmapInfo] = useState("");
-  const [roadmapsList, setRoadmapsList] = useState([])
+  const [roadmapsList, setRoadmapsList] = useState([]);
 
   const refreshToken = async () => {
     try {
@@ -85,14 +85,82 @@ const AuthProvider = ({ children }) => {
         console.log(body);
         AsyncStorage.setItem("userInfo", JSON.stringify(body));
 
-        await postDashboard();
+        const responseDashboard = await axios.get(
+          `${API_URL}/api/v1/dashboards/users/${body.id}`, // Use body.id instead of userInfo.id
+          {
+            headers: {
+              Authorization: authorizationHeader,
+            },
+          }
+        );
+
+        if (responseDashboard.status === 200) {
+          const dashboardData = responseDashboard.data;
+          setDashboardInfo(dashboardData);
+          console.log("Dashboard Data:", dashboardData);
+
+          const dashboardId = dashboardData.id.toString();
+          console.log("DASHBOARD ID: ", dashboardId);
+          await AsyncStorage.setItem("dashboardId", dashboardId);
+        } else {
+         await postDashboard()
+        }
+
         refreshToken();
         fetchRoadmaps();
       }
     } catch (error) {
-      console.error("Erro de login:", error.response.data);
+      Toast.show("Usuário e/ou senha incorretos.", { type: "danger" });
+      console.log(error)
     }
   };
+
+  const register = async (email, username, password) => {
+    try {
+      const response = await axios.post(`${API_URL}/register`, {
+        email,
+        username,
+        password,
+      });
+
+      if (response.status === 200) {
+        Toast.show("Usuário cadastrado com sucesso!", { type: "success" });
+      }
+      console.log(response);
+    } catch (error) {
+      console.error("Erro no cadastro", error);
+      Toast.show("Erro ao registrar.");
+    }
+  };
+
+  /* const login = async (username, senha) => {
+    try {
+      const response = await axios.post(`${API_URL}/login`, {
+        username,
+        password: senha,
+      });
+
+      if (response.status === 200) {
+        const authorizationHeader = response.headers.authorization;
+        setUserToken(authorizationHeader);
+        console.log("JWT: ", authorizationHeader);
+        AsyncStorage.setItem("userToken", authorizationHeader);
+
+        const body = response.data;
+        setUserInfo(body);
+        console.log(body);
+        AsyncStorage.setItem("userInfo", JSON.stringify(body));
+
+        await postDashboard();
+        refreshToken();
+        fetchRoadmaps();
+      }else{
+        Toast.show("Usuário e/ou senha incorretos.", {type:'danger'})
+      }
+    } catch (error) {
+      Toast.show("Usuário e/ou senha incorretos.", {type:'danger'})
+    }
+  }; */
 
   const logout = () => {
     setIsLoading(true);
@@ -162,7 +230,6 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Não foi possível criar o Roadmap: ", error.response.data);
     }
-
   };
 
   const fetchRoadmaps = async () => {
@@ -180,7 +247,7 @@ const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         const body = response.data;
-        setRoadmapsList(body)
+        setRoadmapsList(body);
       } else {
         console.error("Roadmap data is missing in the response.");
       }
@@ -190,7 +257,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const fetchDashboardData = async () => {
-    try{
+    try {
       const response = await axios.get(
         `${API_URL}/api/v1/dashboards/users/${userInfo.id}`,
         {
@@ -203,14 +270,16 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         const body = response.data;
         setDashboardData(body);
-        console.log("Data adicionada com sucesso.")
-      }else{
-        console.error('Ocorreu um erro na requisição.');
+      } else {
+        console.error("Ocorreu um erro na requisição.");
       }
-    }catch (error){
-      console.error("Erro buscando os dados do dashboard:", error.response.data);
+    } catch (error) {
+      console.error(
+        "Erro buscando os dados do dashboard:",
+        error.response.data
+      );
     }
-  }
+  };
 
   useEffect(() => {
     isLoggedIn();
@@ -233,6 +302,7 @@ const AuthProvider = ({ children }) => {
         fetchDashboardData,
         login,
         logout,
+        register,
         roadmapsList,
       }}
     >

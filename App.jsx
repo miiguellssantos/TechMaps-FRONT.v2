@@ -1,7 +1,8 @@
 import React from "react";
-import  AuthProvider  from "./context/AuthContext";
+import AuthProvider from "./context/AuthContext";
 import AppNav from "./navigation/AppNav";
 import { useFonts } from "expo-font";
+import { ToastProvider } from 'react-native-toast-notifications'
 
 const App = () => {
   const [loaded, error] = useFonts({
@@ -24,9 +25,11 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <AppNav />
+      <ToastProvider>
+        <AppNav />
+      </ToastProvider>
     </AuthProvider>
   );
-}
+};
 
 export default App;

@@ -3,8 +3,10 @@ import { View, Pressable, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "./style";
+import { useNavigation } from "@react-navigation/native";
 
-const PageHeader = ({ navigation, pageName }) => {
+const PageHeader = ({ pageName }) => {
+  const navigation = useNavigation()
   return (
     <LinearGradient
       style={styles.header}

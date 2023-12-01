@@ -6,7 +6,7 @@ import TaskItem from "../TaskItem/TaskItem";
 const TaskList = ({ language }) => {
   if (language === "PYTHON") {
     return (
-      <ScrollView>
+      <ScrollView style={{marginBottom: 40}}>
         {pythonTasks.map((task) => (
           <TaskItem key={task.id} task={task} />
         ))}
@@ -14,7 +14,7 @@ const TaskList = ({ language }) => {
     );
   } else if (language === "JAVA") {
     return (
-      <ScrollView>
+      <ScrollView style={{marginBottom: 40}}>
         {javaTasks.map((task) => (
           <TaskItem key={task.id} task={task} />
         ))}
@@ -22,7 +22,7 @@ const TaskList = ({ language }) => {
     );
   } else if (language === "JAVASCRIPT") {
     return (
-      <ScrollView>
+      <ScrollView style={{marginBottom: 40}}>
         {javascriptTasks.map((task) => (
           <TaskItem key={task.id} task={task} />
         ))}

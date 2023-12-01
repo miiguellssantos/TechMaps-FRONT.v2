@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Text, Image, View, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,8 +6,15 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./style";
 
 import InputField from "../../../components/InputField/InputField";
+import { AuthContext } from "../../../context/AuthContext";
 
 const RegisterScreen = ({ navigation }) => {
+  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  const {register} = useContext(AuthContext);
+
   return (
     <LinearGradient
       style={styles.gradient}
@@ -28,39 +35,28 @@ const RegisterScreen = ({ navigation }) => {
         <View style={styles.container}>
           <Text style={styles.loginText}>Registre-se</Text>
 
-          <View style={styles.buttons}>
-            <TouchableOpacity onPress={() => {}}>
-              <View style={styles.googleButton}>
-                <Image
-                  styles={styles.logo}
-                  source={require("../../../assets/googleButton.png")}
-                />
-                <Text style={styles.googleText}>Google</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
-              <View style={styles.githubButton}>
-                <Image
-                  styles={styles.logo}
-                  source={require("../../../assets/githubButton.png")}
-                />
-                <Text style={styles.githubText}>GitHub</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.textLoginCom}>Ou, registre-se com...</Text>
-
-          <InputField label="Nome de usuário" icon="account" />
-          <InputField label="Email" icon="at" keyboardType={"email-address"} />
-          <InputField label="Senha" icon="lock" inputType={"password"} />
           <InputField
-            label="Confirme a senha"
+            label="Nome de usuário"
+            icon="account"
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+          />
+          <InputField
+            label="Email"
+            icon="at"
+            keyboardType={"email-address"}
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <InputField
+            label="Senha"
             icon="lock"
             inputType={"password"}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
 
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {register(email, username, password)}}>
             <LinearGradient
               style={styles.loginButton}
               locations={[0, 1]}
