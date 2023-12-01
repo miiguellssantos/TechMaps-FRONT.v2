@@ -1,0 +1,1115 @@
+openapi: "3.0.3"
+info:
+  title: "TechMaps API"
+  description: "TechMaps is a mobile application which strives towards providing students roadmaps that cover topics of the software development world."
+  version: "1.0.1"
+servers:
+  - url: "localhost:8080"
+    description: "Server for authentication requests"
+  - url: "localhost:8080/api/v1"
+    description: "Server for all other requests"
+paths:
+  /refresh-token:
+    get:
+      summary: "GET refresh-token"
+      operationId: "getNewAccessToken"
+      tags:
+        - "User"
+      parameters:
+        - name: "refresh-token"
+          in: "cookie"
+          required: false
+          schema:
+            type: "string"
+            default: ""
+      responses:
+        "200":
+          description: "OK"
+    delete:
+      summary: "DELETE refresh-token"
+      operationId: "logout"
+      tags:
+        - "User"
+      responses:
+        "200":
+          description: "OK"
+  /register:
+    post:
+      summary: "POST register"
+      operationId: "createUser"
+      tags:
+        - "User"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /api/v1/users/id/{userId}:
+    get:
+      summary: "GET api/v1/users/id/{userId}"
+      operationId: "getUserById"
+      tags:
+        - "User"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /api/v1/users/{userId}:
+    patch:
+      summary: "PATCH api/v1/users/{userId}"
+      operationId: "updateUser"
+      tags:
+        - "User"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /api/v1/dashboards/{dashboardId}:
+    get:
+      summary: "GET api/v1/dashboards/{dashboardId}"
+      operationId: "getDashboardById"
+      tags:
+        - "Dashboards"
+      parameters:
+        - name: "dashboardId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DashboardResponse"
+  /api/v1/dashboards/users/{userId}:
+    get:
+      summary: "GET api/v1/dashboards/users/{userId}"
+      operationId: "getDashboardByUserId"
+      tags:
+        - "Dashboards"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DashboardResponse"
+  /api/v1/dashboards/{userId}:
+    post:
+      summary: "POST api/v1/dashboards/{userId}"
+      operationId: "saveNewDashboard"
+      tags:
+        - "Dashboards"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/DashboardResponse"
+  /api/v1/dashboards/{dashboardId}/roadmaps/{roadmapId}:
+    get:
+      summary: "GET api/v1/dashboards/{dashboardId}/roadmaps/{roadmapId}"
+      operationId: "getRoadmapById"
+      tags:
+        - "Roadmaps"
+      parameters:
+        - name: "dashboardId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RoadmapResponse"
+    patch:
+      summary: "PATCH api/v1/dashboards/{dashboardId}/roadmaps/{roadmapId}"
+      operationId: "updateRoadmap"
+      tags:
+        - "Roadmaps"
+      parameters:
+        - name: "dashboardId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateColorRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RoadmapResponse"
+    delete:
+      summary: "DELETE api/v1/dashboards/{dashboardId}/roadmaps/{roadmapId}"
+      operationId: "deleteRoadmapById"
+      tags:
+        - "Roadmaps"
+      parameters:
+        - name: "dashboardId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RoadmapResponse"
+  /api/v1/dashboards/{dashboardId}/roadmaps:
+    post:
+      summary: "POST api/v1/dashboards/{dashboardId}/roadmaps"
+      operationId: "addNewRoadmap"
+      tags:
+        - "Roadmaps"
+      parameters:
+        - name: "dashboardId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoadmapRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RoadmapResponse"
+    get:
+      summary: "GET api/v1/dashboards/{dashboardId}/roadmaps"
+      operationId: "listAllRoadmaps"
+      tags:
+        - "Roadmaps"
+      parameters:
+        - name: "dashboardId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/RoadmapResponse"
+  /api/v1/dashboards/{dashboardId}/roadmaps/completed:
+    get:
+      summary: "GET api/v1/dashboards/{dashboardId}/roadmaps/completed"
+      operationId: "listAllCompletedRoadmaps"
+      tags:
+        - "Roadmaps"
+      parameters:
+        - name: "dashboardId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/RoadmapResponse"
+  /api/v1/roadmaps/{roadmapId}/stages/{stageId}:
+    get:
+      summary: "GET api/v1/roadmaps/{roadmapId}/stages/{stageId}"
+      operationId: "getStageById"
+      tags:
+        - "Stages"
+      parameters:
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/StageResponse"
+    put:
+      summary: "PUT api/v1/roadmaps/{roadmapId}/stages/{stageId}"
+      operationId: "updateStageStatus"
+      tags:
+        - "Stages"
+      parameters:
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStatusRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UpdateStatusResponse"
+    delete:
+      summary: "DELETE api/v1/roadmaps/{roadmapId}/stages/{stageId}"
+      operationId: "deleteStageById"
+      tags:
+        - "Stages"
+      parameters:
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/StageResponse"
+  /api/v1/roadmaps/{roadmapId}/stages:
+    get:
+      summary: "GET api/v1/roadmaps/{roadmapId}/stages"
+      operationId: "getStagesByRoadmapId"
+      tags:
+        - "Stages"
+      parameters:
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/StageResponse"
+    post:
+      summary: "POST api/v1/roadmaps/{roadmapId}/stages"
+      operationId: "addNewStage"
+      tags:
+        - "Stages"
+      parameters:
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStageRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/StageResponse"
+  /api/v1/roadmaps/{roadmapId}/stages/addStages:
+    post:
+      summary: "POST api/v1/roadmaps/{roadmapId}/stages/addStages"
+      operationId: "addStagesByRoadmapId"
+      tags:
+        - "Stages"
+      parameters:
+        - name: "roadmapId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/StageResponse"
+  /api/v1/stages/{stageId}/tasks/{taskId}:
+    get:
+      summary: "GET api/v1/stages/{stageId}/tasks/{taskId}"
+      operationId: "getTaskById"
+      tags:
+        - "Tasks"
+      parameters:
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+  /api/v1/stages/{stageId}/tasks:
+    get:
+      summary: "GET api/v1/stages/{stageId}/tasks"
+      operationId: "getTasksByStageId"
+      tags:
+        - "Tasks"
+      parameters:
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/TaskResponse"
+    post:
+      summary: "POST api/v1/stages/{stageId}/tasks"
+      operationId: "addTasks"
+      tags:
+        - "Tasks"
+      parameters:
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/TaskResponse"
+  /api/v1/stages/{stageId}/tasks/{taskId}/repository:
+    patch:
+      summary: "PATCH api/v1/stages/{stageId}/tasks/{taskId}/repository"
+      operationId: "updateTaskRepository"
+      tags:
+        - "Tasks"
+      parameters:
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRepositoryRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+  /api/v1/stages/{stageId}/tasks/{taskId}/date-finished:
+    patch:
+      summary: "PATCH api/v1/stages/{stageId}/tasks/{taskId}/date-finished"
+      operationId: "updateTaskDateFinished"
+      tags:
+        - "Tasks"
+      parameters:
+        - name: "stageId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDateFinishedRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+  /api/v1/tasks/{taskId}/commits:
+    get:
+      summary: "GET api/v1/tasks/{taskId}/commits"
+      operationId: "getCommitByTaskId"
+      tags:
+        - "Commits"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CommitResponse"
+  /api/v1/tasks/{taskId}/commits/{commitId}:
+    get:
+      summary: "GET api/v1/tasks/{taskId}/commits/{commitId}"
+      operationId: "getCommitById"
+      tags:
+        - "Commits"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "commitId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CommitResponse"
+    put:
+      summary: "PUT api/v1/tasks/{taskId}/commits/{commitId}"
+      operationId: "updateCommit"
+      tags:
+        - "Commits"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "commitId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCommitStatus"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UpdateCommitResponse"
+  /api/v1/tasks/{taskId}/steps:
+    get:
+      summary: "GET api/v1/tasks/{taskId}/steps"
+      operationId: "getTaskSteps"
+      tags:
+        - "Steps"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/StepResponse"
+  /api/v1/tasks/{taskId}/steps/generate:
+    post:
+      summary: "POST api/v1/tasks/{taskId}/steps/generate"
+      operationId: "generateTaskSteps"
+      tags:
+        - "Steps"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/StepResponse"
+  /api/v1/tasks/{taskId}/steps/{stepId}/priority:
+    patch:
+      summary: "PATCH api/v1/tasks/{taskId}/steps/{stepId}/priority"
+      operationId: "updateTaskStepPriority"
+      tags:
+        - "Steps"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "stepId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/StepResponse"
+  /api/v1/tasks/{taskId}/steps/{stepId}/finish:
+    patch:
+      summary: "PATCH api/v1/tasks/{taskId}/steps/{stepId}/finish"
+      operationId: "updateTaskStepFinishedStatus"
+      tags:
+        - "Steps"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+        - name: "stepId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            format: "uuid"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/StepResponse"
+                
+components:
+  schemas:
+    UserRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        username:
+          type: "string"
+        password:
+          type: "string"
+    UserResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        email:
+          type: "string"
+        username:
+          type: "string"
+    DashboardResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        totalRoadmaps:
+          type: "integer"
+          format: "int32"
+        totalCommits:
+          type: "integer"
+          format: "int32"
+        totalTasks:
+          type: "integer"
+          format: "int32"
+        totalTime:
+          type: "integer"
+          format: "int64"
+        userId:
+          type: "string"
+          format: "uuid"
+    Timestamp:
+      type: "object"
+      properties:
+        nanos:
+          type: "integer"
+          format: "int32"
+    RoadmapResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        title:
+          type: "string"
+        type:
+          type: "string"
+          enum:
+            - "FRONTEND"
+            - "BACKEND"
+            - "ANDROID"
+        status:
+          type: "string"
+          enum:
+            - "COMPLETE"
+            - "UNCOMPLETE"
+        language:
+          type: "string"
+          enum:
+            - "JAVA"
+            - "PYTHON"
+            - "JAVASCRIPT"
+            - "KOTLIN"
+        color:
+          type: "string"
+          enum:
+            - "RED"
+            - "ORANGE"
+            - "BROWN"
+            - "YELLOW"
+            - "GREEN"
+            - "BLUE"
+            - "PURPLE"
+            - "PINK"
+            - "BLACK"
+            - "WHITE"
+            - "GRAY"
+        startTime:
+          $ref: "#/components/schemas/Timestamp"
+        finishTime:
+          $ref: "#/components/schemas/Timestamp"
+        totalTime:
+          type: "integer"
+          format: "int64"
+        commits:
+          type: "integer"
+          format: "int32"
+        dashboardId:
+          type: "string"
+          format: "uuid"
+    CreateRoadmapRequest:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+        type:
+          type: "string"
+          enum:
+            - "FRONTEND"
+            - "BACKEND"
+            - "ANDROID"
+        dashboardId:
+          type: "string"
+          format: "uuid"
+    UpdateColorRequest:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+        color:
+          type: "string"
+          enum:
+            - "RED"
+            - "ORANGE"
+            - "BROWN"
+            - "YELLOW"
+            - "GREEN"
+            - "BLUE"
+            - "PURPLE"
+            - "PINK"
+            - "BLACK"
+            - "WHITE"
+            - "GRAY"
+    TaskResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        stageId:
+          type: "string"
+          format: "uuid"
+        title:
+          type: "string"
+        description:
+          type: "string"
+        position:
+          type: "integer"
+          format: "int32"
+        repository:
+          type: "string"
+        dateCreated:
+          $ref: "#/components/schemas/Timestamp"
+        dateFinished:
+          $ref: "#/components/schemas/Timestamp"
+        dashboardId:
+          type: "string"
+          format: "uuid"
+        commitId:
+          type: "string"
+          format: "uuid"
+    StageResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        roadmapId:
+          type: "string"
+          format: "uuid"
+        theme:
+          type: "string"
+          enum:
+            - "LEARN_PYTHON"
+            - "LEARN_JAVA"
+            - "LEARN_KOTLIN"
+            - "LEARN_HTML"
+            - "LEARN_CSS"
+            - "LEARN_JS"
+            - "LEARN_INTERNET"
+            - "LEARN_DIAGRAMS"
+            - "LEARN_WEBSERVERS"
+            - "LEARN_CLOUD"
+            - "LEARN_GIT"
+            - "LEARN_GITHUB"
+            - "LEARN_API"
+            - "LEARN_REST"
+            - "LEARN_SOAP"
+            - "LEARN_AGILE"
+            - "LEARN_DEVOPS"
+            - "LEARN_OOP"
+            - "LEARN_SOLID"
+            - "LEARN_CLEAN_CODE"
+            - "LEARN_TDD"
+            - "LEARN_CLEAN_ARCHITECTURE"
+            - "LEARN_VSCODE"
+            - "LEARN_INTELLIJ"
+            - "LEARN_ANDROID"
+            - "LEARN_NODEJS"
+            - "LEARN_ANGULAR"
+            - "LEARN_SPRING"
+            - "LEARN_DJANGO"
+            - "LEARN_REACT"
+            - "LEARN_BOOTSTRAP"
+            - "LEARN_MYSQL"
+            - "LEARN_POSTGRES"
+            - "LEARN_DOCKER"
+            - "LEARN_FIREBASE"
+        status:
+          type: "string"
+          enum:
+            - "DONE"
+            - "UNDONE"
+        tasks:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/TaskResponse"
+        number:
+          type: "integer"
+          format: "int32"
+        commits:
+          type: "integer"
+          format: "int32"
+    CreateStageRequest:
+      type: "object"
+      properties:
+        theme:
+          type: "string"
+          enum:
+            - "LEARN_PYTHON"
+            - "LEARN_JAVA"
+            - "LEARN_KOTLIN"
+            - "LEARN_HTML"
+            - "LEARN_CSS"
+            - "LEARN_JS"
+            - "LEARN_INTERNET"
+            - "LEARN_DIAGRAMS"
+            - "LEARN_WEBSERVERS"
+            - "LEARN_CLOUD"
+            - "LEARN_GIT"
+            - "LEARN_GITHUB"
+            - "LEARN_API"
+            - "LEARN_REST"
+            - "LEARN_SOAP"
+            - "LEARN_AGILE"
+            - "LEARN_DEVOPS"
+            - "LEARN_OOP"
+            - "LEARN_SOLID"
+            - "LEARN_CLEAN_CODE"
+            - "LEARN_TDD"
+            - "LEARN_CLEAN_ARCHITECTURE"
+            - "LEARN_VSCODE"
+            - "LEARN_INTELLIJ"
+            - "LEARN_ANDROID"
+            - "LEARN_NODEJS"
+            - "LEARN_ANGULAR"
+            - "LEARN_SPRING"
+            - "LEARN_DJANGO"
+            - "LEARN_REACT"
+            - "LEARN_BOOTSTRAP"
+            - "LEARN_MYSQL"
+            - "LEARN_POSTGRES"
+            - "LEARN_DOCKER"
+            - "LEARN_FIREBASE"
+    UpdateStatusRequest:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          enum:
+            - "DONE"
+            - "UNDONE"
+    UpdateStatusResponse:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          enum:
+            - "DONE"
+            - "UNDONE"
+    CreateTaskRequest:
+      type: "object"
+      properties:
+        repository:
+          type: "string"
+    UpdateRepositoryRequest:
+      type: "object"
+      properties:
+        repository:
+          type: "string"
+    UpdateDateFinishedRequest:
+      type: "object"
+      properties: { }
+    CommitResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        taskId:
+          type: "string"
+          format: "uuid"
+        tag:
+          type: "string"
+        state:
+          type: "string"
+          enum:
+            - "STAGED"
+            - "UNSTAGED"
+    UpdateCommitStatus:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          enum:
+            - "STAGED"
+            - "UNSTAGED"
+    UpdateCommitResponse:
+      type: "object"
+      properties:
+        state:
+          type: "string"
+          enum:
+            - "STAGED"
+            - "UNSTAGED"
+    StepResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        taskId:
+          type: "string"
+          format: "uuid"
+        number:
+          type: "integer"
+          format: "int32"
+        text:
+          type: "string"
