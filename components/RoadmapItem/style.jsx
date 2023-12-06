@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: "hidden",
   },
+  roadmapContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   icon: {
     alignItems: "center",
     flexDirection: "row",
