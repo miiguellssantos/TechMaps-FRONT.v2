@@ -17,8 +17,8 @@ import InputField from "../../../components/InputField/InputField";
 const LoginScreen = ({ navigation }) => {
   const { login } = useContext(AuthContext);
 
-  const [username, setUsername] = useState("miguel");
-  const [senha, setSenha] = useState("senha");
+  const [username, setUsername] = useState("");
+  const [senha, setSenha] = useState("");
 
   return (
     <LinearGradient
@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
               <Icon name={"lock"} size={20} color={"#FFF"} />
               <TextInput
                 style={styles.input}
-                placeholder="Password"
+                placeholder="Senha"
                 placeholderTextColor={"#FFF"}
                 secureTextEntry={true}
                 value={senha}
