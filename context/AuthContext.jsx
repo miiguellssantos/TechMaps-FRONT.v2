@@ -204,6 +204,30 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteRoadmapContext = async (roadmapId) => {
+    const dashboardId = await AsyncStorage.getItem("dashboardId");
+    const authorizationHeader = await AsyncStorage.getItem("userToken");
+    try {
+      const response = await axios.delete(
+        `${API_URL}/api/v1/dashboards/${dashboardId}/roadmaps/${roadmapId}`,
+        {
+          headers: {
+            Authorization: authorizationHeader,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        Toast.show("Roadmap deletado com sucesso! ", { type: "success" });
+      } else {
+        Toast.show("Erro ao deletar o roadmap", { type: "danger" });
+      }
+    } catch (error) {
+      Toast.show("Erro ao deletar o roadmap", { type: "danger" });
+      console.log("Erro ao deletar o roadmap: ", error.response.data);
+    }
+  };
+
   const fetchRoadmaps = async () => {
     const dashboardId = await AsyncStorage.getItem("dashboardId");
     const authorizationHeader = await AsyncStorage.getItem("userToken");
@@ -331,6 +355,7 @@ const AuthProvider = ({ children }) => {
         roadmapsList,
         concludedRoadmapsList,
         createCertificate,
+        deleteRoadmapContext
       }}
     >
       {children}
