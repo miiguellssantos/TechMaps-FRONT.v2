@@ -127,7 +127,7 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         Toast.show("Usuário cadastrado com sucesso!", { type: "success" });
       }
-      console.log(response);
+      console.log(response.data);
     } catch (error) {
       console.error("Erro no cadastro", error);
       Toast.show("Erro ao registrar.");
